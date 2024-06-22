@@ -13,6 +13,7 @@ package ru.example.projects.playwright_dev;
 import com.microsoft.playwright.Page;
 import io.qameta.allure.Description;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import ru.example.framework.playwright.BaseWebTest;
 import ru.example.projects.playwright_dev.logic.DemoPlaywrightLogic;
@@ -23,6 +24,7 @@ class DemoPlaywrightTest extends BaseWebTest {
     @Test
     @DisplayName("1 : Тест первый")
     @Description("Описание")
+    @Tag("playwright")
     void simpleTest(Page page) {
         DemoPlaywrightLogic logic = new DemoPlaywrightLogic(page);
         logic.openPage("https://playwright.dev/");
