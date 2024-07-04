@@ -1,0 +1,58 @@
+pipeline {
+
+    agent any
+
+    parameters {
+        choice(name: 'browser', choices: ['chromium', 'firefox', 'webkit'], description: 'Выберите браузер для прогона')
+        string(name: 'email', defaultValue: '', description: 'Email address for receive report')
+    }
+
+    stages {
+        stage('Run Tests') {
+
+            steps('run docker image') {
+                // This step should not normally be used in your script. Consult the inline help for details.
+                withDockerContainer(image: 'qvipka/qvipka/playwright-jdk21:latest') {
+                    sh './mvnw -Dmaven.repo.local=/tmp/mvn-repo -Dbrowser=$browser clean test'
+                }
+            }
+
+        }
+    }
+
+    post {
+        always {
+            script {
+
+                /** Сначала в любом случае генерим аллюр-отчет **/
+                allure([
+                   includeProperties: false,
+                   jdk: '',
+                   properties: [],
+                   reportBuildPolicy: 'ALWAYS',
+                   results: [[path: 'target/allure-results']]
+                ])
+
+                /** Затягиваем данные из результатов **/
+                junit 'target/surefire-reports/*.xml'
+
+                /** Отправляем на почту **/
+                emailext to: '$email',
+                    subject: "RUN: junit5+playwright+docker",
+                    body:'''
+                        <b>Test browser:</b> ${browser}<br/>
+                        <br/>
+                        <br/>
+                        <b>Report link:</b> http://185.185.59.232:8080/job/${JOB_NAME}/${BUILD_NUMBER}<br/>
+                        <br/>
+                        <b>Execution results:<br/>
+                        Total: ${TEST_COUNTS,var="total"}
+                        <span style="color:rgb(0,255,0);">&nbsp;&nbsp;&nbsp;Passed: ${TEST_COUNTS,var="pass"}</span>
+                        <span style="color:rgb(255,0,0);">&nbsp;&nbsp;&nbsp;Failed: ${TEST_COUNTS,var="fail"}</span></b>
+                        ''',
+                    mimeType: 'text/html',
+                    attachmentsPattern: '*-report*'
+              }
+        }
+    }
+}
