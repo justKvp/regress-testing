@@ -12,7 +12,7 @@ pipeline {
 
             steps('run docker image') {
                 // This step should not normally be used in your script. Consult the inline help for details.
-                withDockerContainer(image: 'qvipka/debian-slim-playwright-java:latest') {
+                withDockerContainer(image: 'qvipka/playwright-java:latest') {
                     sh './mvnw -Dmaven.repo.local=/tmp/mvn-repo -Dbrowser=$browser clean test'
                 }
             }
