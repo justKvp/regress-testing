@@ -14,7 +14,7 @@ pipeline {
                 // This step should not normally be used in your script. Consult the inline help for details.
                 withDockerContainer(image: 'mcr.microsoft.com/playwright/java:latest') {
                     sh 'w'
-                    sh './mvnw -Dbrowser=$browser clean test'
+                    sh './mvnw -Dmaven.repo.local=/tmp/mvn-repo -Dbrowser=$browser clean test'
                 }
             }
 
