@@ -19,6 +19,7 @@ import org.junit.jupiter.api.Test;
 import ru.example.framework.playwright.BaseWebTest;
 import ru.example.projects.playwright_dev.logic.DemoPlaywrightLogic;
 
+import static ru.example.framework.allure.AllureUtil.logToAllure;
 import static ru.example.framework.allure.AllureUtil.makeScreenshot;
 import static ru.example.framework.playwright.PlaywrightConstants.DEFAULT_VISIBLE_5S;
 
@@ -35,6 +36,7 @@ class DemoPlaywrightTest extends BaseWebTest {
         logic.clickButtonGetStarted();
         logic.checkNextPage();
         makeScreenshot(page, "страница");
+        logToAllure("Browser: " + getBrowserName());
     }
 
     @Test
@@ -43,6 +45,7 @@ class DemoPlaywrightTest extends BaseWebTest {
     @Tag("playwright")
     void simpleTest2(Page page) {
         page.navigate("https://www.sberbank.ru/ru/person/persons");
+        logToAllure("Browser: " + getBrowserName());
         page.waitForSelector("//*[@class='dk-sbol-button__text dk-sbol-button__text_size_md' and text()='Уже хочу карту!']", DEFAULT_VISIBLE_5S);
         Assertions.assertTrue(page.locator("//*[@class='dk-sbol-button__text dk-sbol-button__text_size_md' and text()='Уже хочу карту!']").isVisible());
         makeScreenshot(page, "страница");
