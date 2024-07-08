@@ -21,7 +21,7 @@ import ru.example.projects.playwright_dev.logic.DemoPlaywrightLogic;
 
 import static ru.example.framework.allure.AllureUtil.logToAllure;
 import static ru.example.framework.allure.AllureUtil.makeScreenshot;
-import static ru.example.framework.playwright.PlaywrightConstants.DEFAULT_VISIBLE_5S;
+import static ru.example.framework.playwright.PlaywrightConstants.DEFAULT_VISIBLE_15S;
 
 @DisplayName("Проект: Demo playwright.dev")
 class DemoPlaywrightTest extends BaseWebTest {
@@ -46,7 +46,7 @@ class DemoPlaywrightTest extends BaseWebTest {
     void simpleTest2(Page page) {
         page.navigate("https://www.sberbank.ru/ru/person/persons");
         logToAllure("Browser: " + getBrowserName());
-        page.waitForSelector("//*[@class='dk-sbol-button__text dk-sbol-button__text_size_md' and text()='Уже хочу карту!']", DEFAULT_VISIBLE_5S);
+        page.waitForSelector("//*[@class='dk-sbol-button__text dk-sbol-button__text_size_md' and text()='Уже хочу карту!']", DEFAULT_VISIBLE_15S);
         Assertions.assertTrue(page.locator("//*[@class='dk-sbol-button__text dk-sbol-button__text_size_md' and text()='Уже хочу карту!']").isVisible());
         makeScreenshot(page, "страница");
     }
@@ -182,13 +182,6 @@ class DemoPlaywrightTest extends BaseWebTest {
     }
 
 
-
-
-
-
-
-
-
     @Test
     @DisplayName("13 : Тест первый")
     @Description("Описание")
@@ -209,7 +202,7 @@ class DemoPlaywrightTest extends BaseWebTest {
     void simpleTest14(Page page) {
         page.navigate("https://www.sberbank.ru/ru/person/persons");
         logToAllure("Browser: " + getBrowserName());
-        page.waitForSelector("//*[@class='dk-sbol-button__text dk-sbol-button__text_size_md' and text()='Уже хочу карту!']", DEFAULT_VISIBLE_5S);
+        page.waitForSelector("//*[@class='dk-sbol-button__text dk-sbol-button__text_size_md' and text()='Уже хочу карту!']", DEFAULT_VISIBLE_15S);
         Assertions.assertTrue(page.locator("//*[@class='dk-sbol-button__text dk-sbol-button__text_size_md' and text()='Уже хочу карту!']").isVisible());
         makeScreenshot(page, "страница");
     }
