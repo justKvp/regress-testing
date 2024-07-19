@@ -13,9 +13,9 @@ public class PWOptions implements OptionsFactory {
     @Override
     public Options getOptions() {
         Options options = new Options();
-        BrowserType.LaunchOptions launchOptions = new BrowserType.LaunchOptions();
 
         // LaunchOptions
+        BrowserType.LaunchOptions launchOptions = new BrowserType.LaunchOptions();
         if (!StringUtils.isEmpty(System.getProperty("browser"))) {
             options.setBrowserName(System.getProperty("browser"));
             switch (System.getProperty("browser")) {
@@ -41,6 +41,7 @@ public class PWOptions implements OptionsFactory {
         options.setContextOptions(new Browser.NewContextOptions()
                 .setUserAgent("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.159 Safari/537.36")
                 .setIgnoreHTTPSErrors(true)
+                .setViewportSize(1280, 1024)
         );
 
         options.setIgnoreHTTPSErrors(true);
