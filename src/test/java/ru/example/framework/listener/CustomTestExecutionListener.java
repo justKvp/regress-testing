@@ -24,6 +24,6 @@ public class CustomTestExecutionListener implements TestExecutionListener {
 
     public void testPlanExecutionFinished(TestPlan testPlan) {
         DBMgr.closeSessionFactory();
-        logger.info("testPlanExecutionStarted : " + testPlan.getRoots());
+        logger.info("testPlanExecutionStarted");
     }
 }
