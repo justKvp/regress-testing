@@ -1,4 +1,4 @@
-package ru.example.projects.playwright_dev.logic;
+package ru.example.projects.playwright.logic;
 
 import com.microsoft.playwright.Page;
 import io.qameta.allure.Step;

@@ -3,13 +3,15 @@ package ru.example.framework.config;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
-
-import javax.inject.Singleton;
+import ru.example.framework.config.project.ProjectCfg;
+import ru.example.framework.config.selenoid.SelenoidCfg;
 
 @Data
 @JsonIgnoreProperties(ignoreUnknown = true)
-@Singleton
 public class Config {
-    @JsonProperty("baseUrl")
-    private String baseUrl;
+    @JsonProperty("selenoid")
+    private SelenoidCfg selenoid;
+
+    @JsonProperty("project")
+    private ProjectCfg project;
 }

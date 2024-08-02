@@ -1,3 +1,12 @@
 ---
-# базовый URL
-baseUrl: "http://localhost"
+project:
+  # базовый URL
+  baseUrl: "http://localhost"
+  # базовый URL2
+  baseUrl2: "http://localhost"
+  browser: "chrome"
+  locale: "ru-RU"
+  #browserBinary: ""
+  #driverBinary: ""
+  allureTMSUrl: "http://localhost/tms/testCase/"
+  datasource: "local.cfg.xml"
