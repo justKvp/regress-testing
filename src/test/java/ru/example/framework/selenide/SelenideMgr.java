@@ -45,13 +45,13 @@ public class SelenideMgr {
         chromeOptions.addArguments("--no-sandbox");
         chromeOptions.addArguments("--user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.159 Safari/537.36");
         chromeOptions.addArguments("--disable-dev-shm-usage");
-        //chromeOptions.addArguments("--disable-infobars");
-        //chromeOptions.addArguments("--disable-popup-blocking");
+        chromeOptions.addArguments("--disable-infobars");
+        chromeOptions.addArguments("--disable-popup-blocking");
         chromeOptions.addArguments("--disable-notifications");
         chromeOptions.addArguments("--lang=" + config.getProject().getLocale());
-        //chromeOptions.addArguments("--safebrowsing-disable-download-protection");
-        //chromeOptions.addArguments("--unsafely-disable-devtools-self-xss-warnings");
-        //chromeOptions.addArguments("--hide-crash-restore-bubble");
+        chromeOptions.addArguments("--safebrowsing-disable-download-protection");
+        chromeOptions.addArguments("--unsafely-disable-devtools-self-xss-warnings");
+        chromeOptions.addArguments("--hide-crash-restore-bubble");
 
         desiredCapabilities.setCapability(CapabilityType.ACCEPT_INSECURE_CERTS, true);
         desiredCapabilities.setCapability(ChromeOptions.CAPABILITY, chromeOptions);
