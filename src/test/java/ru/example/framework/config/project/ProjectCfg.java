@@ -10,19 +10,8 @@ public class ProjectCfg {
     @JsonProperty("baseUrl2")
     private String baseUrl2;
 
-    @JsonProperty("browser")
-    private String browser;
-    @JsonProperty("locale")
-    private String locale;
-
-    @JsonProperty("browserBinary")
-    private String browserBinary;
-    @JsonProperty("driverBinary")
-    private String driverBinary;
-
     @JsonProperty("allureTMSUrl")
     private String allureTMSUrl;
-
     @JsonProperty("datasource")
     private String datasource;
 }

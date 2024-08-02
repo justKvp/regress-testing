@@ -1,17 +1,22 @@
 ---
-selenoid:
-  remote:
-  reportsFolder:
-  timeout:
-
 project:
   # базовый URL
   baseUrl: "http://localhost"
   # базовый URL2
   baseUrl2: "http://localhost"
-  browser: "chrome"
-  locale: "ru-RU"
-  #browserBinary: ""
-  #driverBinary: ""
   allureTMSUrl: "http://localhost/tms/testCase/"
   datasource: "local.cfg.xml"
+
+selenide:
+  browser: "chrome"
+  browserSize: "1920x1080"
+  locale: "ru-RU"
+  timeout: 10000
+  #browserBinary: "" # не обязателен
+  #driverBinary: ""  # не обязателен
+  #reportsFolder: "" # не обязателен
+  screenshots: false
+  savePageSource: false
+
+selenoid:
+  remote: "http://localhost:4444/wd/hub"

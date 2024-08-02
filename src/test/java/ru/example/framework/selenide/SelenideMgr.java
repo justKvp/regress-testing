@@ -8,38 +8,42 @@ import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import ru.example.framework.config.Config;
 import ru.example.framework.config.ConfigMgr;
+import ru.example.framework.config.selenide.SelenideCfg;
+import ru.example.framework.config.selenoid.SelenoidCfg;
 
 @Singleton
 public class SelenideMgr {
     private static final Logger logger = LoggerFactory.getLogger("SelenideMgr");
 
     public static void initialize() {
-        Config config = ConfigMgr.getConfig();
+        SelenideCfg config = ConfigMgr.getConfig().getSelenide();
+        SelenoidCfg selenoidCfg = ConfigMgr.getConfig().getSelenoid();
 
-        if (config.getSelenoid() != null) {
-            Configuration.remote = config.getSelenoid().getRemote();
-            Configuration.reportsFolder = config.getSelenoid().getReportsFolder();
-            Configuration.timeout = config.getSelenoid().getTimeout();
+        Configuration.browser = config.getBrowser();
+        Configuration.browserSize = config.getBrowserSize();
+        Configuration.timeout = config.getTimeout();
+        Configuration.screenshots = config.getScreenshots();
+        Configuration.savePageSource = config.getSavePageSource();
+
+        if (!StringUtils.isEmpty(config.getReportsFolder()))
+            Configuration.reportsFolder = config.getReportsFolder();
+
+        if (selenoidCfg != null) {
+            Configuration.remote = selenoidCfg.getRemote();
         }
         else {
-            if (!StringUtils.isEmpty(config.getProject().getDriverBinary()))
-                System.getProperty("webdriver.chrome.driver", config.getProject().getDriverBinary());
-            if (!StringUtils.isEmpty(config.getProject().getBrowserBinary()))
-                Configuration.browserBinary = config.getProject().getBrowserBinary();
+            if (!StringUtils.isEmpty(config.getDriverBinary()))
+                System.getProperty("webdriver.chrome.driver", config.getDriverBinary());
+            if (!StringUtils.isEmpty(config.getBrowserBinary()))
+                Configuration.browserBinary = config.getBrowserBinary();
         }
-
-        Configuration.browser = config.getProject().getBrowser();
-        Configuration.browserSize = "1920x1080";
-        Configuration.screenshots = false;
-        Configuration.savePageSource = false;
 
         DesiredCapabilities capabilities = getDesiredCapabilities(config);
         Configuration.browserCapabilities = capabilities;
     }
 
-    private static DesiredCapabilities getDesiredCapabilities(Config config) {
+    private static DesiredCapabilities getDesiredCapabilities(SelenideCfg config) {
         DesiredCapabilities desiredCapabilities = new DesiredCapabilities();
         ChromeOptions chromeOptions = new ChromeOptions();
         chromeOptions.addArguments("--no-sandbox");
@@ -48,7 +52,7 @@ public class SelenideMgr {
         chromeOptions.addArguments("--disable-infobars");
         chromeOptions.addArguments("--disable-popup-blocking");
         chromeOptions.addArguments("--disable-notifications");
-        chromeOptions.addArguments("--lang=" + config.getProject().getLocale());
+        chromeOptions.addArguments("--lang=" + config.getLocale());
         chromeOptions.addArguments("--safebrowsing-disable-download-protection");
         chromeOptions.addArguments("--unsafely-disable-devtools-self-xss-warnings");
         chromeOptions.addArguments("--hide-crash-restore-bubble");
