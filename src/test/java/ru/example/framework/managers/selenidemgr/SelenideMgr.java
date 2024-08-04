@@ -1,4 +1,4 @@
-package ru.example.framework.selenide;
+package ru.example.framework.managers.selenidemgr;
 
 import com.codeborne.selenide.Configuration;
 import jakarta.inject.Singleton;
@@ -8,7 +8,7 @@ import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import ru.example.framework.config.ConfigMgr;
+import ru.example.framework.managers.configmgr.ConfigMgr;
 import ru.example.framework.config.selenide.SelenideCfg;
 import ru.example.framework.config.selenoid.SelenoidCfg;
 

@@ -18,5 +18,7 @@ selenide:
   screenshots: false
   savePageSource: false
 
+# не обязателен
 selenoid:
+  # не обязателен
   remote: "http://localhost:4444/wd/hub"

@@ -5,7 +5,7 @@ import lombok.Setter;
 import org.hibernate.Session;
 import ru.example.framework.components.StepContext;
 import ru.example.framework.components.WrappableStep;
-import ru.example.framework.config.ConfigMgr;
+import ru.example.framework.managers.configmgr.ConfigMgr;
 
 public abstract class BaseTest {
     @Setter

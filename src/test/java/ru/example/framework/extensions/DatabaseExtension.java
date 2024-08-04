@@ -4,7 +4,7 @@ import org.junit.jupiter.api.extension.AfterEachCallback;
 import org.junit.jupiter.api.extension.BeforeEachCallback;
 import org.junit.jupiter.api.extension.ExtensionContext;
 import ru.example.framework.basetests.BaseTest;
-import ru.example.framework.postgres.dbmgr.DBMgr;
+import ru.example.framework.managers.databasemgr.DBMgr;
 
 public class DatabaseExtension implements BeforeEachCallback, AfterEachCallback {
     @Override

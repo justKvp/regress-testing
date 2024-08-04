@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import ru.example.framework.basetests.BaseTest;
 import ru.example.framework.extensions.DatabaseExtension;
-import ru.example.framework.postgres.models.User;
+import ru.example.framework.managers.databasemgr.models.User;
 
 @Tag("db")
 @DisplayName("Проект: DbTest")

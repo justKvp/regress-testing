@@ -1,14 +1,13 @@
 package ru.example.framework.listener;
 
-import org.apache.commons.lang3.StringUtils;
 import org.junit.platform.launcher.TestExecutionListener;
 import org.junit.platform.launcher.TestPlan;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import ru.example.framework.config.ConfigMgr;
-import ru.example.framework.converter.ConverterMgr;
-import ru.example.framework.postgres.dbmgr.DBMgr;
-import ru.example.framework.selenide.SelenideMgr;
+import ru.example.framework.managers.configmgr.ConfigMgr;
+import ru.example.framework.managers.convertermgr.ConverterMgr;
+import ru.example.framework.managers.databasemgr.DBMgr;
+import ru.example.framework.managers.selenidemgr.SelenideMgr;
 
 public class CustomTestExecutionListener implements TestExecutionListener {
     private static final Logger logger = LoggerFactory.getLogger("Listener");
@@ -18,12 +17,11 @@ public class CustomTestExecutionListener implements TestExecutionListener {
         ConfigMgr.initialize();
         ConverterMgr.initialize();
         SelenideMgr.initialize();
-        if (!StringUtils.isEmpty(ConfigMgr.getConfig().getProject().getDatasource()))
-            DBMgr.initialize(ConfigMgr.getConfig().getProject().getDatasource());
+        DBMgr.initialize();
     }
 
     public void testPlanExecutionFinished(TestPlan testPlan) {
-        DBMgr.closeSessionFactory();
+        DBMgr.closeSessionFactoryIfNeed();
         logger.info("testPlanExecutionStarted");
     }
 }

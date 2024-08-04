@@ -1,8 +1,9 @@
-package ru.example.framework.postgres.dbmgr;
+package ru.example.framework.managers.databasemgr;
 
 import jakarta.inject.Singleton;
 import jakarta.persistence.EntityManager;
 import lombok.Getter;
+import org.apache.commons.lang3.StringUtils;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.MetadataSources;
@@ -10,7 +11,8 @@ import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import ru.example.framework.postgres.models.User;
+import ru.example.framework.managers.configmgr.ConfigMgr;
+import ru.example.framework.managers.databasemgr.models.User;
 
 @Singleton
 public class DBMgr {
@@ -21,14 +23,18 @@ public class DBMgr {
 
     private static StandardServiceRegistry registry;
 
-    public static void initialize(String configFileName) {
-        loadConfigFile("databases/" + configFileName);
-        createSessionFactory();
+    public static void initialize() {
+        if (!StringUtils.isEmpty(ConfigMgr.getConfig().getProject().getDatasource())) {
+            loadConfigFile("databases/" + ConfigMgr.getConfig().getProject().getDatasource());
+            createSessionFactory();
+        }
     }
 
-    public static void closeSessionFactory() {
-        sessionFactory.close();
-        logger.info("factory has been successfully closed");
+    public static void closeSessionFactoryIfNeed() {
+        if (sessionFactory != null) {
+            sessionFactory.close();
+            logger.info("factory has been successfully closed");
+        }
     }
 
     public static Session createSession() {

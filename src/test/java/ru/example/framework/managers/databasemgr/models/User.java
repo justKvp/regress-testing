@@ -1,4 +1,4 @@
-package ru.example.framework.postgres.models;
+package ru.example.framework.managers.databasemgr.models;
 
 import jakarta.persistence.*;
 import lombok.Data;
