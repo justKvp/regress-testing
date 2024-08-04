@@ -35,6 +35,6 @@ class DemoPWTest extends PlaywrightTest {
             page.waitForSelector("//a[text() = 'Java']").click();
         });
 
-        System.out.println("RESPONSE: " + response.body().toString());
+        System.out.println("RESPONSE: " + response.status());
     }
 }

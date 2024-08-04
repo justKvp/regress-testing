@@ -13,6 +13,8 @@ public class PlaywrightCfg {
     private Integer height;
     @JsonProperty("locale")
     private String locale;
+    @JsonProperty("timeout")
+    private Integer timeout;
     @JsonProperty("headless")
     private Boolean headless;
 }

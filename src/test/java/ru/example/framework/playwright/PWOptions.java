@@ -17,23 +17,19 @@ public class PWOptions implements OptionsFactory {
         Options options = new Options();
 
         PlaywrightCfg playwrightCfg = ConfigMgr.getConfig().getPlaywright();
+        options.setBrowserName(playwrightCfg.getBrowser());
 
         // LaunchOptions
         BrowserType.LaunchOptions launchOptions = new BrowserType.LaunchOptions();
-        if (!StringUtils.isEmpty(System.getProperty("browser"))) {
-            options.setBrowserName(System.getProperty("browser"));
-            switch (System.getProperty("browser")) {
-                case "firefox":
-                    Map<String, Object> firefoxUserPrefs = new HashMap<>();
-                    firefoxUserPrefs.put("general.useragent.override", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.159 Safari/537.36");
-                    launchOptions.setFirefoxUserPrefs(firefoxUserPrefs);
-                    break;
-                case "webkit":
-                    launchOptions.setTimeout(50000);
-                    break;
-                default:
-                    break;
-            }
+        launchOptions.setTimeout(playwrightCfg.getTimeout());
+        switch (playwrightCfg.getBrowser()) {
+            case "firefox":
+                Map<String, Object> firefoxUserPrefs = new HashMap<>();
+                firefoxUserPrefs.put("general.useragent.override", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.159 Safari/537.36");
+                launchOptions.setFirefoxUserPrefs(firefoxUserPrefs);
+                break;
+            default:
+                break;
         }
         options.setLaunchOptions(launchOptions);
 

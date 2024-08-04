@@ -19,13 +19,14 @@ selenide:
   savePageSource: false
 
 # не обязателен
-#selenoid:
+selenoid:
   # не обязателен
   #remote: "http://localhost:4444/wd/hub"
 
 playwright:
-  browser: "chrome"
+  browser: "chromium"
   width: 1920
   height: 1080
   locale: "ru-RU"
+  timeout: 10000
   headless: false
