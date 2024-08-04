@@ -32,7 +32,7 @@ public class SelTest extends SelenideTest {
         });
 
         aftStep("Проверить страницу", (action)-> {
-            $("#zddnuw").shouldBe(Condition.visible).$("span").click();
+            $("[class=\"_3homga\"]").shouldBe(Condition.visible).click();
         });
 
 //        aftStep("Клик на ссылку", (action)-> {
