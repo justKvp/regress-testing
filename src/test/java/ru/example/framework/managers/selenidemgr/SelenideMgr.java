@@ -12,53 +12,46 @@ import ru.example.framework.managers.configmgr.ConfigMgr;
 import ru.example.framework.config.selenide.SelenideCfg;
 import ru.example.framework.config.selenoid.SelenoidCfg;
 
+import static ru.example.framework.managers.selenidemgr.options.BrowserOptions.getDesiredCapabilities;
+
 @Singleton
 public class SelenideMgr {
     private static final Logger logger = LoggerFactory.getLogger("SelenideMgr");
 
     public static void initialize() {
-        SelenideCfg config = ConfigMgr.getConfig().getSelenide();
+        SelenideCfg selenideCfg = ConfigMgr.getConfig().getSelenide();
         SelenoidCfg selenoidCfg = ConfigMgr.getConfig().getSelenoid();
 
-        Configuration.browser = config.getBrowser();
-        Configuration.browserSize = config.getBrowserSize();
-        Configuration.timeout = config.getTimeout();
-        Configuration.screenshots = config.getScreenshots();
-        Configuration.savePageSource = config.getSavePageSource();
-
-        if (!StringUtils.isEmpty(config.getReportsFolder()))
-            Configuration.reportsFolder = config.getReportsFolder();
-
-        if (selenoidCfg != null) {
+        if (selenoidCfg != null && !StringUtils.isEmpty(selenoidCfg.getRemote())) {
             Configuration.remote = selenoidCfg.getRemote();
         }
         else {
-            if (!StringUtils.isEmpty(config.getDriverBinary()))
-                System.getProperty("webdriver.chrome.driver", config.getDriverBinary());
-            if (!StringUtils.isEmpty(config.getBrowserBinary()))
-                Configuration.browserBinary = config.getBrowserBinary();
+            if (!StringUtils.isEmpty(selenideCfg.getDriverBinary())) {
+                String driverName = "chrome";
+                switch (selenideCfg.getBrowser()) {
+                    case "firefox": driverName = "gecko"; break;
+                    case "ie": driverName = "ie"; break;
+                    case "edge": driverName = "edge"; break;
+                    default:
+                        break;
+                }
+                System.getProperty(String.format("webdriver.%s.driver", driverName), selenideCfg.getDriverBinary());
+            }
+
+            if (!StringUtils.isEmpty(selenideCfg.getBrowserBinary()))
+                Configuration.browserBinary = selenideCfg.getBrowserBinary();
         }
 
-        DesiredCapabilities capabilities = getDesiredCapabilities(config);
+        Configuration.browser = selenideCfg.getBrowser();
+        Configuration.browserSize = selenideCfg.getBrowserSize();
+        Configuration.timeout = selenideCfg.getTimeout();
+        Configuration.screenshots = selenideCfg.getScreenshots();
+        Configuration.savePageSource = selenideCfg.getSavePageSource();
+        if (!StringUtils.isEmpty(selenideCfg.getReportsFolder()))
+            Configuration.reportsFolder = selenideCfg.getReportsFolder();
+
+        DesiredCapabilities capabilities = getDesiredCapabilities(selenideCfg);
         Configuration.browserCapabilities = capabilities;
-    }
-
-    private static DesiredCapabilities getDesiredCapabilities(SelenideCfg config) {
-        DesiredCapabilities desiredCapabilities = new DesiredCapabilities();
-        ChromeOptions chromeOptions = new ChromeOptions();
-        chromeOptions.addArguments("--no-sandbox");
-        chromeOptions.addArguments("--user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.159 Safari/537.36");
-        chromeOptions.addArguments("--disable-dev-shm-usage");
-        chromeOptions.addArguments("--disable-infobars");
-        chromeOptions.addArguments("--disable-popup-blocking");
-        chromeOptions.addArguments("--disable-notifications");
-        chromeOptions.addArguments("--lang=" + config.getLocale());
-        chromeOptions.addArguments("--safebrowsing-disable-download-protection");
-        chromeOptions.addArguments("--unsafely-disable-devtools-self-xss-warnings");
-        chromeOptions.addArguments("--hide-crash-restore-bubble");
-
-        desiredCapabilities.setCapability(CapabilityType.ACCEPT_INSECURE_CERTS, true);
-        desiredCapabilities.setCapability(ChromeOptions.CAPABILITY, chromeOptions);
-        return desiredCapabilities;
+        logger.info("has been initialized successfully");
     }
 }

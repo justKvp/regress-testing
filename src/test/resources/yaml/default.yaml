@@ -8,7 +8,7 @@ project:
   datasource: "local.cfg.xml"
 
 selenide:
-  browser: "chrome"
+  browser: "chrome"  #chrome, firefox, edge, ie
   browserSize: "1920x1080"
   locale: "ru-RU"
   timeout: 10000
