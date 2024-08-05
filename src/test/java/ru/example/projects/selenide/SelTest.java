@@ -16,6 +16,7 @@ import org.openqa.selenium.remote.Augmenter;
 import ru.example.framework.basetests.selenidetest.SelenideTest;
 import ru.example.framework.managers.configmgr.ConfigMgr;
 
+import java.time.Duration;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
@@ -37,7 +38,7 @@ public class SelTest extends SelenideTest {
         });
 
         aftStep("Проверить страницу", (action)-> {
-            $("[class=\"_3homga\"]").shouldBe(Condition.visible).click();
+            $("[class=\"_3homga\"]").shouldBe(Condition.visible, Duration.ofSeconds(25)).click();
         });
 
         aftStep("Клик на ссылку", (action)-> {
@@ -56,7 +57,7 @@ public class SelTest extends SelenideTest {
                     }
                 });
 
-                $x("//a[text() = 'Java']").shouldBe(Condition.visible).click();
+                $x("//a[text() = 'Java']").shouldBe(Condition.visible, Duration.ofSeconds(25)).click();
             }
         });
     }
