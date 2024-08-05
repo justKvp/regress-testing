@@ -5,6 +5,10 @@ project:
   # базовый URL2
   baseUrl2: "http://localhost"
   allureTMSUrl: "http://localhost/tms/testCase/"
+
+# не обязателен
+database:
+  # не обязателен
   datasource: "local.cfg.xml"
 
 selenide:

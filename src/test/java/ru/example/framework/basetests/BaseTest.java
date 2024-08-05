@@ -19,7 +19,9 @@ public abstract class BaseTest {
     }
 
     public void closeDatabaseSession() {
-        databaseSession.close();
+        if (databaseSession != null) {
+            databaseSession.close();
+        }
     }
 
     public String getStep() { return stepContext.getStep(); }

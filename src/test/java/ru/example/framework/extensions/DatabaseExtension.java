@@ -10,12 +10,12 @@ public class DatabaseExtension implements BeforeEachCallback, AfterEachCallback 
     @Override
     public void afterEach(ExtensionContext extensionContext) throws Exception {
         BaseTest baseTest = (BaseTest) extensionContext.getTestInstance().get();
-        baseTest.setDatabaseSession(DBMgr.createSession());
+        baseTest.closeDatabaseSession();
     }
 
     @Override
     public void beforeEach(ExtensionContext extensionContext) throws Exception {
         BaseTest baseTest = (BaseTest) extensionContext.getTestInstance().get();
-        baseTest.closeDatabaseSession();
+        baseTest.setDatabaseSession(DBMgr.createSession());
     }
 }

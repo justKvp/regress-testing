@@ -9,9 +9,6 @@ public class ProjectCfg {
     private String baseUrl;
     @JsonProperty("baseUrl2")
     private String baseUrl2;
-
     @JsonProperty("allureTMSUrl")
     private String allureTMSUrl;
-    @JsonProperty("datasource")
-    private String datasource;
 }

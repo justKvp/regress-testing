@@ -3,6 +3,7 @@ package ru.example.framework.config;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
+import ru.example.framework.config.database.DatabaseCfg;
 import ru.example.framework.config.playwright.PlaywrightCfg;
 import ru.example.framework.config.project.ProjectCfg;
 import ru.example.framework.config.selenide.SelenideCfg;
@@ -13,6 +14,8 @@ import ru.example.framework.config.selenoid.SelenoidCfg;
 public class Config {
     @JsonProperty("project")
     private ProjectCfg project;
+    @JsonProperty("database")
+    private DatabaseCfg database;
     @JsonProperty("selenide")
     private SelenideCfg selenide;
     @JsonProperty("selenoid")

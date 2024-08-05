@@ -11,6 +11,7 @@ import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import ru.example.framework.config.database.DatabaseCfg;
 import ru.example.framework.managers.configmgr.ConfigMgr;
 import ru.example.framework.managers.databasemgr.models.User;
 
@@ -24,8 +25,9 @@ public class DBMgr {
     private static StandardServiceRegistry registry;
 
     public static void initialize() {
-        if (!StringUtils.isEmpty(ConfigMgr.getConfig().getProject().getDatasource())) {
-            loadConfigFile("databases/" + ConfigMgr.getConfig().getProject().getDatasource());
+        DatabaseCfg databaseCfg = ConfigMgr.getConfig().getDatabase();
+        if (databaseCfg != null && !StringUtils.isEmpty(databaseCfg.getDatasource())) {
+            loadConfigFile("databases/" + databaseCfg.getDatasource());
             createSessionFactory();
         }
     }
