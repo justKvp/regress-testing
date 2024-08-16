@@ -17,8 +17,6 @@ pipeline {
                 //}
 
                 sh './mvnw -Dconfig=$config -Dgroups=$tags clean test'
-
-                echo "JOB_NAME1: ${env.JOB_NAME}"
             }
 
         }
@@ -40,13 +38,6 @@ pipeline {
                 /** Затягиваем данные из результатов **/
                 junit 'target/surefire-reports/*.xml'
 
-                /** Генерим отчет для allure-notifications **/
-                //sh 'allure generate target/allure-results -o target/allure-report'
-
-                echo "JOB_NAME: ${env.JOB_NAME}"
-                echo 'BUILD_NUMBER: ${env.BUILD_NUMBER}'
-                echo 'JENKINS_URL: ${env.JENKINS_URL}'
-
                 /** Отправляем отчет на почту **/
                 callAllureNotification();
               }
@@ -64,10 +55,10 @@ def createConfig() {
     String body = '{\n' +
             '  "base": {\n' +
             '    "logo": "logo.png",\n' +
-            '    "project": $JOB_NAME,\n' +
+            '    "project": ""${env.JOB_NAME}"",\n' +
             '    "environment": "some env",\n' +
             '    "comment": "some comment",\n' +
-            '    "reportLink": $BUILD_URL,\n' +
+            '    "reportLink": "${env.JENKINS_URL}",\n' +
             '    "language": "ru",\n' +
             '    "allureFolder": "allure-report",\n' +
             '    "enableChart": true,\n' +
