@@ -57,7 +57,7 @@ def createConfig(String jobName, String url, String login, String password) {
     echo url
     echo login
     Boolean bol = password.equals("hxjg ntot nfnh cqss")
-    echo bol
+    echo String.valueOf(bol)
     String body = '{\n' +
             '  "base": {\n' +
             '    "logo": "logo.png",\n' +
