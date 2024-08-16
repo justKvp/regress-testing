@@ -39,7 +39,7 @@ pipeline {
                 junit 'target/surefire-reports/*.xml'
 
                 /** Генерим отчет для allure-notifications **/
-                sh 'allure generate target/allure-results -o target/allure-report'
+                //sh 'allure generate target/allure-results -o target/allure-report'
 
                 /** Отправляем отчет на почту **/
                 callAllureNotification();
@@ -66,10 +66,10 @@ def callAllureNotification() {
             '"-Dcomment=some comment" ' +
             '"-DreportLink=some link" ' +
             '"-Dlanguage=ru" ' +
-            '"-DallureFolder=target/allure-report" ' +
+            '"-DallureFolder=allure-report" ' +
             '"-DenableChart=true" ' +
             '"-DenableSuitesPublishing=true" ' +
 
-            '-jar ./notifications/allure-notifications-4.7.0.jar';
+            '-jar notifications/allure-notifications-4.7.0.jar';
     sh '$command';
 }
