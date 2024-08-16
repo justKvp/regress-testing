@@ -72,5 +72,7 @@ def callAllureNotification() {
             '"-DenableSuitesPublishing=true" ' +
 
             '-jar notifications/allure-notifications-4.7.0.jar';
-    sh '$command';
+
+    echo command;
+    sh command;
 }
