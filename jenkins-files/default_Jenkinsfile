@@ -73,8 +73,8 @@ def createConfig(String jobName, String url, String login, String password) {
             '  "mail": {\n' +
             '    "host": "smtp.gmail.com",\n' +
             '    "port": "465",\n' +
-            '    "username": ${login},\n' +
-            '    "password": ${password},\n' +
+            '    "username": "${login}",\n' +
+            '    "password": "${password}",\n' +
             '    "securityProtocol": "SSL",\n' +
             '    "from": "qvipka@gmail.com",\n' +
             '    "recipient": "va_90@mail.ru",\n' +
