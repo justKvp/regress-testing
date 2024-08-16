@@ -49,6 +49,7 @@ pipeline {
 }
 
 def callAllureNotification() {
+    sh 'pwd';
     String command = 'java  ' +
             '"-Dmessenger=email" ' +
 
