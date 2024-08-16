@@ -41,9 +41,10 @@ pipeline {
                 /** Генерим отчет для allure-notifications **/
                 //sh 'allure generate target/allure-results -o target/allure-report'
 
-echo 'JOB_NAME: ${JOB_NAME}'
-    echo 'JOB_BASE_NAME: ${JOB_BASE_NAME}'
-    echo 'BUILD_URL: ${BUILD_URL}'
+                echo 'JOB_NAME: $JOB_NAME'
+                echo 'JOB_BASE_NAME: $JOB_BASE_NAME'
+                echo 'BUILD_URL: $BUILD_URL'
+
                 /** Отправляем отчет на почту **/
                 callAllureNotification();
               }
@@ -58,15 +59,13 @@ def callAllureNotification() {
 }
 
 def createConfig() {
-
-
     String body = '{\n' +
             '  "base": {\n' +
             '    "logo": "logo.png",\n' +
-            '    "project": ${JOB_NAME},\n' +
+            '    "project": $JOB_NAME,\n' +
             '    "environment": "some env",\n' +
             '    "comment": "some comment",\n' +
-            '    "reportLink": ${BUILD_URL},\n' +
+            '    "reportLink": $BUILD_URL,\n' +
             '    "language": "ru",\n' +
             '    "allureFolder": "allure-report",\n' +
             '    "enableChart": true,\n' +
