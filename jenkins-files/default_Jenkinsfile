@@ -25,7 +25,6 @@ pipeline {
     post {
         always {
             script {
-
                 /** Сначала в любом случае генерим аллюр-отчет **/
                 allure([
                    includeProperties: false,
@@ -39,26 +38,28 @@ pipeline {
                 junit 'target/surefire-reports/*.xml'
 
                 /** Отправляем отчет на почту **/
-                callAllureNotification();
-              }
+                withCredentials([usernamePassword(credentialsId: 'qvipka', usernameVariable: 'EMAIL_LOGIN', passwordVariable: 'EMAIL_PASSWORD')]) {
+                    callAllureNotification($JOB_NAME, $BUILD_URL, $EMAIL_LOGIN, $EMAIL_PASSWORD);
+                }
+            }
         }
     }
 }
 
-def callAllureNotification() {
-    createConfig()
+def callAllureNotification(String jobName, String url, String login, String password) {
+    createConfig(jobName, url, login, password)
     sh 'java "-DconfigFile=notifications/config.json" -jar notifications/allure-notifications-4.7.0.jar'
     deleteConfig()
 }
 
-def createConfig() {
+def createConfig(String jobName, String url, String login, String password) {
     String body = '{\n' +
             '  "base": {\n' +
             '    "logo": "logo.png",\n' +
-            '    "project": "${env.JOB_NAME}",\n' +
+            '    "project": $jobName",\n' +
             '    "environment": "some env",\n' +
             '    "comment": "some comment",\n' +
-            '    "reportLink": "${env.JENKINS_URL}",\n' +
+            '    "reportLink": $url,\n' +
             '    "language": "ru",\n' +
             '    "allureFolder": "allure-report",\n' +
             '    "enableChart": true,\n' +
@@ -67,8 +68,8 @@ def createConfig() {
             '  "mail": {\n' +
             '    "host": "smtp.gmail.com",\n' +
             '    "port": "465",\n' +
-            '    "username": "qvipka",\n' +
-            '    "password": "hxjg ntot nfnh cqss",\n' +
+            '    "username": $login,\n' +
+            '    "password": $password,\n' +
             '    "securityProtocol": "SSL",\n' +
             '    "from": "qvipka@gmail.com",\n' +
             '    "recipient": "va_90@mail.ru",\n' +
