@@ -41,7 +41,7 @@ pipeline {
                 /** Генерим отчет для allure-notifications **/
                 //sh 'allure generate target/allure-results -o target/allure-report'
 
-                echo 'JOB_NAME: ${env.JOB_NAME}'
+                echo "JOB_NAME: ${env.JOB_NAME}"
                 echo 'BUILD_NUMBER: ${env.BUILD_NUMBER}'
                 echo 'JENKINS_URL: ${env.JENKINS_URL}'
 
