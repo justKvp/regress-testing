@@ -17,6 +17,8 @@ pipeline {
                 //}
 
                 sh './mvnw -Dconfig=$config -Dgroups=$tags clean test'
+
+                echo "JOB_NAME1: ${env.JOB_NAME}"
             }
 
         }
