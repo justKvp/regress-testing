@@ -37,22 +37,34 @@ pipeline {
                 junit 'target/surefire-reports/*.xml'
 
                 /** Отправляем на почту **/
-                emailext to: '$email',
-                    subject: "RUN: junit5+playwright+docker",
-                    body:'''
-                        <b>Test browser:</b> ${browser}<br/>
-                        <br/>
-                        <br/>
-                        <b>Report link:</b> http://185.185.59.232:8080/job/${JOB_NAME}/${BUILD_NUMBER}<br/>
-                        <br/>
-                        <b>Execution results:<br/>
-                        Total: ${TEST_COUNTS,var="total"}
-                        <span style="color:rgb(0,255,0);">&nbsp;&nbsp;&nbsp;Passed: ${TEST_COUNTS,var="pass"}</span>
-                        <span style="color:rgb(255,0,0);">&nbsp;&nbsp;&nbsp;Failed: ${TEST_COUNTS,var="fail"}</span></b>
-                        ''',
-                    mimeType: 'text/html',
-                    attachmentsPattern: '*-report*'
+                callAllureNotification();
               }
         }
     }
+}
+
+def callAllureNotification() {
+    String command = 'java  ' +
+            '"-Dmessenger=email" ' +
+
+            '"-Dmail.host=smtp.gmail.com" ' +
+            '"-Dmail.port=465" ' +
+            '"-Dmail.username=qvipka" ' +
+            '"-Dmail.password=hxjg ntot nfnh cqss" ' +
+            '"-Dmail.securityProtocol=SSL" ' +
+            '"-Dmail.recipient=va_90@mail.ru" ' +
+            '"-Dmail.templatePath=/templates/html.ftl" ' +
+
+            '"-Dlogo=logo.png" ' +
+            '"-Dproject=${JOB_BASE_NAME}" ' +
+            '"-Denvironment=some env" ' +
+            '"-Dcomment=some comment" ' +
+            '"-DreportLink=some link" ' +
+            '"-Dlanguage=ru" ' +
+            '"-DallureFolder=target/allure-report" ' +
+            '"-DenableChart=true" ' +
+            '"-DenableSuitesPublishing=true" ' +
+
+            '-jar ./notifications/allure-notifications-4.7.0.jar';
+    sh command;
 }
