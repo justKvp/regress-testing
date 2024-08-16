@@ -39,7 +39,7 @@ pipeline {
 
                 /** Отправляем отчет на почту **/
                 withCredentials([usernamePassword(credentialsId: '20cf5225-1ba6-4d68-8ead-a781f0b607fe', usernameVariable: 'EMAIL_LOGIN', passwordVariable: 'EMAIL_PASSWORD')]) {
-                    callAllureNotification($JOB_NAME, $BUILD_URL, $EMAIL_LOGIN, $EMAIL_PASSWORD);
+                    callAllureNotification(${JOB_NAME}, ${BUILD_URL}, ${EMAIL_LOGIN}, ${EMAIL_PASSWORD});
                 }
             }
         }
