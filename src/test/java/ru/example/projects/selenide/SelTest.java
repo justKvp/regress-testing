@@ -7,7 +7,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.devtools.DevTools;
 import org.openqa.selenium.devtools.HasDevTools;
 import org.openqa.selenium.devtools.v85.network.Network;
@@ -17,8 +16,6 @@ import ru.example.framework.basetests.selenidetest.SelenideTest;
 import ru.example.framework.managers.configmgr.ConfigMgr;
 
 import java.time.Duration;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Optional;
 
 import static com.codeborne.selenide.Selenide.*;
@@ -27,7 +24,6 @@ import static com.codeborne.selenide.Selenide.*;
 @DisplayName("Проект: Selenide")
 public class SelTest extends SelenideTest {
 
-    @Tag("run")
     @Test
     @DisplayName("1 : Тест первый")
     @Description("Описание")
