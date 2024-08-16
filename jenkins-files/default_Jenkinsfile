@@ -38,7 +38,7 @@ pipeline {
                 junit 'target/surefire-reports/*.xml'
 
                 /** Отправляем отчет на почту **/
-                withCredentials([usernamePassword(credentialsId: '20cf5225-1ba6-4d68-8ead-a781f0b607fe', usernameVariable: 'EMAIL_LOGIN', passwordVariable: 'EMAIL_PASSWORD')]) {
+                withCredentials([usernamePassword(credentialsId: 'qvipka', usernameVariable: EMAIL_LOGIN, passwordVariable: EMAIL_PASSWORD)]) {
                     callAllureNotification(JOB_NAME, BUILD_URL, EMAIL_LOGIN, EMAIL_PASSWORD);
                 }
             }
@@ -53,6 +53,10 @@ def callAllureNotification(String jobName, String url, String login, String pass
 }
 
 def createConfig(String jobName, String url, String login, String password) {
+    echo jobName
+    echo url
+    echo login
+    echo password
     String body = '{\n' +
             '  "base": {\n' +
             '    "logo": "logo.png",\n' +
