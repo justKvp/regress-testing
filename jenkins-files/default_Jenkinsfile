@@ -49,30 +49,39 @@ pipeline {
 }
 
 def callAllureNotification() {
-    sh 'pwd';
-    String command = 'java  ' +
-            '"-Dmessenger=email" ' +
+    createConfig()
+    sh 'java "-DconfigFile=notifications/config.json" -jar notifications/allure-notifications-4.7.0.jar'
+    deleteConfig()
+}
 
-            '"-Dmail.host=smtp.gmail.com" ' +
-            '"-Dmail.port=465" ' +
-            '"-Dmail.username=qvipka" ' +
-            '"-Dmail.password=hxjg ntot nfnh cqss" ' +
-            '"-Dmail.securityProtocol=SSL" ' +
-            '"-Dmail.recipient=va_90@mail.ru" ' +
-            '"-Dmail.templatePath=/templates/html.ftl" ' +
+def createConfig() {
+    String body = '{\n' +
+            '  "base": {\n' +
+            '    "logo": "logo.png",\n' +
+            '    "project": "${JOB_BASE_NAME}",\n' +
+            '    "environment": "some env",\n' +
+            '    "comment": "some comment",\n' +
+            '    "reportLink": "${BUILD_URL}",\n' +
+            '    "language": "ru",\n' +
+            '    "allureFolder": "allure-report",\n' +
+            '    "enableChart": true,\n' +
+            '    "enableSuitesPublishing": true\n' +
+            '  },\n' +
+            '  "mail": {\n' +
+            '    "host": "smtp.gmail.com",\n' +
+            '    "port": "465",\n' +
+            '    "username": "qvipka",\n' +
+            '    "password": "hxjg ntot nfnh cqss",\n' +
+            '    "securityProtocol": "SSL",\n' +
+            '    "from": "qvipka@gmail.com",\n' +
+            '    "recipient": "va_90@mail.ru",\n' +
+            '    "templatePath": "/templates/html.ftl"\n' +
+            '  }\n' +
+            '}';
 
-            '"-Dlogo=logo.png" ' +
-            '"-Dproject=${JOB_BASE_NAME}" ' +
-            '"-Denvironment=some env" ' +
-            '"-Dcomment=some comment" ' +
-            '"-DreportLink=some link" ' +
-            '"-Dlanguage=ru" ' +
-            '"-DallureFolder=allure-report" ' +
-            '"-DenableChart=true" ' +
-            '"-DenableSuitesPublishing=true" ' +
+    writeFile file: 'notifications/config.json', text: body
+}
 
-            '-jar notifications/allure-notifications-4.7.0.jar';
-
-    echo command;
-    sh command;
+def deleteConfig() {
+    sh 'rm notifications/config.json'
 }
