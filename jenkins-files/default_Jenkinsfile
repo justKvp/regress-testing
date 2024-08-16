@@ -38,7 +38,10 @@ pipeline {
                 /** Затягиваем данные из результатов **/
                 junit 'target/surefire-reports/*.xml'
 
-                /** Отправляем на почту **/
+                /** Генерим отчет для allure-notifications **/
+                sh 'allure generate target/allure-results -o target/allure-report'
+
+                /** Отправляем отчет на почту **/
                 callAllureNotification();
               }
         }
