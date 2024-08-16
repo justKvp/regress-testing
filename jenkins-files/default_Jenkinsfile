@@ -55,7 +55,7 @@ def createConfig() {
     String body = '{\n' +
             '  "base": {\n' +
             '    "logo": "logo.png",\n' +
-            '    "project": ""${env.JOB_NAME}"",\n' +
+            '    "project": "${env.JOB_NAME}",\n' +
             '    "environment": "some env",\n' +
             '    "comment": "some comment",\n' +
             '    "reportLink": "${env.JENKINS_URL}",\n' +
