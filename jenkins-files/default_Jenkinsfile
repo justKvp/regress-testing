@@ -53,14 +53,9 @@ def callAllureNotification(String jobName, String url, String login, String pass
 }
 
 def createConfig(String jobName, String url, String login, String password) {
-    echo jobName
-    echo url
-    echo login
-    Boolean bol = password.equals("hxjg ntot nfnh cqss")
-    echo String.valueOf(bol)
     String body = '{\n' +
             '  "base": {\n' +
-            '    "logo": "notifications/logo.png",\n' +
+            '    "logo": "notifications/logo.svg",\n' +
             '    "project": "' + jobName + '",\n' +
             '    "environment": "some env",\n' +
             '    "comment": "some comment",\n' +
