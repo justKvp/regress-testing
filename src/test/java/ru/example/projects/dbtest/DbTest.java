@@ -18,15 +18,18 @@ public class DbTest extends BaseTest {
     @Test
     @DisplayName("1 : Тест первый")
     @Description("Описание")
-
     void simpleTest() {
         User testUser = new User();
         testUser.setText("test text");
 
         databaseSession.beginTransaction();
-        Long id = (Long) databaseSession.save(testUser);
+        databaseSession.persist(testUser);
         databaseSession.getTransaction().commit();
 
+        Long id = testUser.getEmpCodeId();
+
+        //docker run --name selectel-pgdocker -e POSTGRES_PASSWORD=selectel -e POSTGRES_USER=selectel -e POSTGRES_DB=selectel -d -p 5432:5432 -v $HOME/docker/volumes/postgres:/var/lib/postgresql/data postgres
+        //docker run --restart=always --name some-postgres -e POSTGRES_PASSWORD=postgres -d -p 5432:5432 -v $HOME/docker/volumes/postgres:/var/lib/postgresql/data postgres
         Assertions.assertTrue(id > 0);
     }
 }
