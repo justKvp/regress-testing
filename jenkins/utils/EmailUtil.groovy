@@ -2,7 +2,7 @@ def sendAllureNotificationMailReport(String recipients, boolean isLinux) {
     def allureNotificationUtil = load "jenkins/utils/AllureNotificationUtil.groovy"
 
     withCredentials([usernamePassword(credentialsId: 'qvipka', usernameVariable: 'EMAIL_LOGIN', passwordVariable: 'EMAIL_PASSWORD')]) {
-        allureNotificationUtil.callAllureNotification($DEFAULT_SUBJECT, JOB_DESCRIPTION, recipients, BUILD_URL, EMAIL_LOGIN, EMAIL_PASSWORD, isLinux);
+        allureNotificationUtil.callAllureNotification(JOB_NAME, BUILD_NUMBER, JOB_DESCRIPTION, recipients, BUILD_URL, EMAIL_LOGIN, EMAIL_PASSWORD, isLinux);
     }
 }
 
