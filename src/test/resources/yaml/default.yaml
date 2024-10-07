@@ -9,7 +9,7 @@ project:
 # не обязателен
 database:
   # не обязателен
-  datasource: "local.cfg.xml"
+  #datasource: "local.cfg.xml"
 
 # не обязателен
 #selenide:
