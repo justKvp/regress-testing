@@ -9,28 +9,30 @@ project:
 # не обязателен
 database:
   # не обязателен
-  #datasource: "local.cfg.xml"
-
-selenide:
-  browser: "chrome"  #chrome, firefox, edge, ie
-  browserSize: "1920x1080"
-  locale: "ru-RU"
-  timeout: 10000
-  #browserBinary: "" # не обязателен
-  #driverBinary: ""  # не обязателен
-  #reportsFolder: "" # не обязателен
-  screenshots: false
-  savePageSource: false
+  datasource: "local.cfg.xml"
 
 # не обязателен
-selenoid:
-  # не обязателен
-  #remote: "http://localhost:4444/wd/hub"
+#selenide:
+#  browser: "chrome"  #chrome, firefox, edge, ie
+#  browserSize: "1920x1080"
+#  locale: "ru-RU"
+#  timeout: 10000
+#  #browserBinary: "" # не обязателен
+#  #driverBinary: ""  # не обязателен
+#  #reportsFolder: "" # не обязателен
+#  screenshots: false
+#  savePageSource: false
 
-playwright:
-  browser: "chromium"
-  width: 1920
-  height: 1080
-  locale: "ru-RU"
-  timeout: 10000
-  headless: false
+# не обязателен
+#selenoid:
+#  # не обязателен
+#  #remote: "http://localhost:4444/wd/hub"
+
+# не обязателен
+#playwright:
+#  browser: "chromium"
+#  width: 1920
+#  height: 1080
+#  locale: "ru-RU"
+#  timeout: 10000
+#  headless: false

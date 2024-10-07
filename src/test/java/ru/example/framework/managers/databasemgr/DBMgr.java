@@ -30,6 +30,9 @@ public class DBMgr {
             loadConfigFile("databases/" + databaseCfg.getDatasource());
             createSessionFactory();
         }
+        else {
+            logger.info("DBMgr has been disabled");
+        }
     }
 
     public static void closeSessionFactoryIfNeed() {

@@ -18,8 +18,12 @@ public class SelenideMgr {
 
     public static void initialize() {
         SelenideCfg selenideCfg = ConfigMgr.getConfig().getSelenide();
-        SelenoidCfg selenoidCfg = ConfigMgr.getConfig().getSelenoid();
+        if (selenideCfg == null) {
+            logger.info("SelenideCfg has been disabled");
+            return;
+        }
 
+        SelenoidCfg selenoidCfg = ConfigMgr.getConfig().getSelenoid();
         if (selenoidCfg != null && !StringUtils.isEmpty(selenoidCfg.getRemote())) {
             Configuration.remote = selenoidCfg.getRemote();
         }
@@ -33,7 +37,7 @@ public class SelenideMgr {
                     default:
                         break;
                 }
-                System.getProperty(String.format("webdriver.%s.driver", driverName), selenideCfg.getDriverBinary());
+                System.setProperty(String.format("webdriver.%s.driver", driverName), selenideCfg.getDriverBinary());
             }
 
             if (!StringUtils.isEmpty(selenideCfg.getBrowserBinary()))
