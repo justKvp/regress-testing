@@ -13,12 +13,15 @@ def callAllureNotification(String recipients,
 }
 
 def createConfig(String recipients, String url, String login, String password) {
+    String subject = '$DEFAULT_SUBJECT'
+    String jobDescription = '${JOB_DESCRIPTION}'
+
     String body = '{\n' +
             '  "base": {\n' +
             '    "logo": "lib/logo.png",\n' +
-            '    "project": "${JOB_NAME}",\n' +
+            '    "project": "' + subject +'",\n' +
             '    "environment": "some env",\n' +
-            '    "comment": "some comment",\n' +
+            '    "comment": "' + jobDescription + '",\n' +
             '    "reportLink": "' + url + '",\n' +
             '    "language": "ru",\n' +
             '    "allureFolder": "allure-report",\n' +
@@ -32,7 +35,7 @@ def createConfig(String recipients, String url, String login, String password) {
             '    "password": "' + password + '",\n' +
             '    "securityProtocol": "SSL",\n' +
             '    "from": "qvipka@gmail.com",\n' +
-            '    "recipient": "va_90@mail.ru",\n' +
+            '    "recipient": "' + recipients + '",\n' +
             '    "templatePath": "/templates/html.ftl"\n' +
             '  }\n' +
             '}';
