@@ -9,7 +9,7 @@ def handlePostAction(boolean withStackTrace, String testStand, String recipients
 
     /** Отправляем отчет на почту **/
     //modules.EmailUtil.sendClassicMailReport(withStackTrace, testStand, recipients)
-    modules.EmailUtil.sendAllureNotificationMailReport(recipients, isUnix())
+    modules.EmailUtil.sendAllureNotificationMailReport(testStand, recipients, isUnix())
 
     /** Очищаем **/
     modules.CleanUtil.cleanProject(isUnix())
