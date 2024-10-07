@@ -26,13 +26,13 @@ def createConfig(String recipients, String url, String login, String password) {
             '    "enableSuitesPublishing": true\n' +
             '  },\n' +
             '  "mail": {\n' +
-            '    "host": "smtp.rosatom.ru",\n' +
-            '    "port": "25",\n' +
+            '    "host": "smtp.gmail.com",\n' +
+            '    "port": "465",\n' +
             '    "username": "' + login + '",\n' +
             '    "password": "' + password + '",\n' +
-            '    "securityProtocol": null,\n' +
-            '    "from": "jenkins@greenatom.ru",\n' +
-            '    "recipient": "' + recipients + '",\n' +
+            '    "securityProtocol": "SSL",\n' +
+            '    "from": "qvipka@gmail.com",\n' +
+            '    "recipient": "va_90@mail.ru",\n' +
             '    "templatePath": "/templates/html.ftl"\n' +
             '  }\n' +
             '}';
