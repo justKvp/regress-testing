@@ -1,6 +1,6 @@
-def callAllureNotification(String recipients,
+def callAllureNotification(String subject, String jobDescription, String recipients,
                            String url, String login, String password, boolean isLinux) {
-    createConfig(recipients, url, login, password)
+    createConfig(subject, jobDescription, recipients, url, login, password)
 
     if (isLinux) {
         sh 'java "-DconfigFile=lib/config.json" -jar lib/allure-notifications-4.7.0.jar'
@@ -12,14 +12,11 @@ def callAllureNotification(String recipients,
     deleteConfig(isLinux)
 }
 
-def createConfig(String recipients, String url, String login, String password) {
-    String subject = '$DEFAULT_SUBJECT'
-    String jobDescription = '${JOB_DESCRIPTION}'
-
+def createConfig(String subject, String jobDescription, String recipients, String url, String login, String password) {
     String body = '{\n' +
             '  "base": {\n' +
             '    "logo": "lib/logo.png",\n' +
-            '    "project": "' + subject +'",\n' +
+            '    "project": "' + subject + '",\n' +
             '    "environment": "some env",\n' +
             '    "comment": "' + jobDescription + '",\n' +
             '    "reportLink": "' + url + '",\n' +
