@@ -1,11 +1,11 @@
 def cleanProject(boolean isLinux) {
     // Очищаем target
     if (isLinux) {
-        sh 'mvn clean'
+        sh './mvnw clean'
         //sh 'rm -r build'
     }
     else {
-        bat 'mvn clean'
+        bat './mvnw clean'
         //bat 'rmdir /s /q build'
     }
 }
