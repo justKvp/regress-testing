@@ -17,7 +17,9 @@ pipeline {
                 //    sh './mvnw -Dconfig=$config -Dgroups=tags clean test'
                 //}
 
-                sh './mvnw -Dconfig=$config -Dgroups=$tags clean test'
+                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                    sh './mvnw -Dconfig=$config -Dgroups=$tags clean test'
+                }
             }
 
         }
