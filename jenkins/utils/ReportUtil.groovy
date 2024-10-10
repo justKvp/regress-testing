@@ -1,7 +1,7 @@
 /** Считываем результаты из junit surefire **/
 def prepareJunitReport() {
     echo '--- Считываем результаты из junit surefire'
-    junit 'target/surefire-reports/*.xml', skipPublishingChecks: true
+    junit 'target/surefire-reports/*.xml'
 }
 
 /** Подготавливаем allure report **/
