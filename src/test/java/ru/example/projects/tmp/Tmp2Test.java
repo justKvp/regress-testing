@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 import ru.example.framework.basetests.BaseTest;
 
 @DisplayName("suite : TmpTest имя набора")
-public class TmpTest extends BaseTest {
+public class Tmp2Test extends BaseTest {
 
     @Tag("run")
     @Test
@@ -27,7 +27,7 @@ public class TmpTest extends BaseTest {
 
     @Tag("run")
     @Test
-    @DisplayName("тест : simpleTest2 имя теста")
+    @DisplayName("2 тест : simpleTest2 имя теста")
     public void simpleTest2() {
         aftStep("первый шаг", (action)-> {
 
@@ -44,7 +44,7 @@ public class TmpTest extends BaseTest {
 
     @Tag("run")
     @Test
-    @DisplayName("тест : simpleTest3 имя теста")
+    @DisplayName("2 тест : simpleTest3 имя теста")
     public void simpleTest3() {
         aftStep("первый шаг", (action)-> {
 
