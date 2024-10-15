@@ -24,6 +24,10 @@ public class TestResultKeeper {
     private static ConcurrentHashMap<String, TestResultData> tmpAllTestResultMap;
 
     private static List<SuiteResultData> exportSuiteList;
+    private static Integer totalTests = 0;
+    private static Integer passed = 0;
+    private static Integer failed = 0;
+    private static Integer aborted = 0;
 
     public static void initialize() {
         tmpSuiteMap = new HashMap<>();
@@ -61,15 +65,15 @@ public class TestResultKeeper {
     public static void showResults() {
         logger.info("кол-во suites: " + exportSuiteList.size());
 
-        for (SuiteResultData suite : exportSuiteList) {
-            logger.info(String.format("кол-во тестов для suite [%s] = %d", suite.getSuiteName(), suite.getTestResultList().size()));
+//        for (SuiteResultData suite : exportSuiteList) {
+//            logger.info(String.format("кол-во тестов для suite [%s] = %d", suite.getSuiteName(), suite.getTestResultList().size()));
+//
+//            for (TestResultData testResult: suite.getTestResultList()) {
+//                logger.info(testResult.toString());
+//            }
+//        }
 
-            for (TestResultData testResult: suite.getTestResultList()) {
-                logger.info(testResult.toString());
-            }
-        }
-
-        logger.info("Результаты в виде json: \n" + makeStringFromObject(exportSuiteList));
+        logger.info("Результаты в виде json: \n" + makeStringFromObject(new ExportData(totalTests, passed, failed, aborted, exportSuiteList)));
     }
 
     /** Перебор имеющихся suite, для формирования списка тестов в каждом **/
@@ -77,6 +81,15 @@ public class TestResultKeeper {
         for (TestResultData testResultData: tmpAllTestResultMap.values()) {
             String suiteName = testResultData.suite;
             getSuite(suiteName).addTestResult(testResultData);
+
+            totalTests ++;
+            switch (testResultData.result) {
+                case "SUCCESSFUL": passed++; break;
+                case "ABORTED": failed++; break;
+                case "FAILED": aborted++; break;
+                default:
+                    break;
+            }
         }
 
         prepareExportList();
