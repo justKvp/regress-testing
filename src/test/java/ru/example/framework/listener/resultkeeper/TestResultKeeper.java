@@ -1,7 +1,6 @@
 package ru.example.framework.listener.resultkeeper;
 
 import jakarta.inject.Singleton;
-import lombok.Getter;
 import org.junit.platform.engine.TestExecutionResult;
 import org.junit.platform.launcher.TestIdentifier;
 import org.slf4j.Logger;
