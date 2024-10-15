@@ -29,7 +29,7 @@ public class CustomTestExecutionListener implements TestExecutionListener {
         logger.info("testPlanExecutionFinished");
 
         TestResultKeeper.prepareTestResults();
-        //TestResultKeeper.showResults();
+        TestResultKeeper.showResults();
     }
 
     public void executionFinished(TestIdentifier testIdentifier, TestExecutionResult testExecutionResult) {

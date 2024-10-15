@@ -73,7 +73,7 @@ public class TestResultKeeper {
 //            }
 //        }
 
-        logger.info("Результаты в виде json: \n" + makeStringFromObject(new ExportData(totalTests, passed, failed, aborted, exportSuiteList)));
+        logger.info("Результаты в виде json: \n" + makeStringFromObject(new ExportData(totalTests, passed, failed, aborted, System.getProperty("buildUrl"), exportSuiteList)));
     }
 
     /** Перебор имеющихся suite, для формирования списка тестов в каждом **/
