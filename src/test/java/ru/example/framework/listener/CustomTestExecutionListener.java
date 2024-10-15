@@ -18,10 +18,11 @@ public class CustomTestExecutionListener implements TestExecutionListener {
     public void testPlanExecutionStarted(TestPlan testPlan) {
         logger.info("testPlanExecutionStarted : " + testPlan.getRoots());
         ConfigMgr.initialize();
-        TestResultKeeper.initialize();
         ConverterMgr.initialize();
         SelenideMgr.initialize();
         DBMgr.initialize();
+
+        TestResultKeeper.initialize();
     }
 
     public void testPlanExecutionFinished(TestPlan testPlan) {
