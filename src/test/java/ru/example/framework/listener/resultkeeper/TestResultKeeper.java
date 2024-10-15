@@ -7,26 +7,35 @@ import org.junit.platform.launcher.TestIdentifier;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
+
+import static ru.example.framework.managers.convertermgr.ConverterMgr.makeStringFromObject;
 
 @Singleton
 public class TestResultKeeper {
     private static final Logger logger = LoggerFactory.getLogger("TestResultKeeper");
 
-    private static HashMap<String, SuiteResultData> suiteMap;
+    private static HashMap<String, SuiteResultData> tmpSuiteMap;
 
     /** обязательно Concurrent, тк при одновременном вызове при параллели можем потерять тест **/
-    private static ConcurrentHashMap<String, TestResultData> allTestResultMap;
+    private static ConcurrentHashMap<String, TestResultData> tmpAllTestResultMap;
+
+    private static List<SuiteResultData> exportSuiteList;
 
     public static void initialize() {
-        suiteMap = new HashMap<>();
-        allTestResultMap = new ConcurrentHashMap<>();
+        tmpSuiteMap = new HashMap<>();
+        tmpAllTestResultMap = new ConcurrentHashMap<>();
+        exportSuiteList = new ArrayList<>();
     }
 
+    /** Добавление результата теста во временную concurrent hashmap **/
     public static void addTestResult(TestIdentifier testIdentifier, TestExecutionResult testExecutionResult) {
         if (testIdentifier.isTest()) {
             String name = testIdentifier.getDisplayName();
+            String method = testIdentifier.getLegacyReportingName();
 
             /** suite name as class name **/
             String suite = "";
@@ -45,37 +54,54 @@ public class TestResultKeeper {
                 reason = testExecutionResult.getThrowable().get().getMessage();
             }
 
-            allTestResultMap.put(name+suite, new TestResultData(name, suite, result, reason));
-        }
-    }
-
-    public static void filLTestsInSuites() {
-        for (TestResultData testResultData: allTestResultMap.values()) {
-            String suiteName = testResultData.suite;
-            getSuite(suiteName).addTestResult(testResultData);
+            tmpAllTestResultMap.put(name+suite, new TestResultData(name, method, suite, result, reason));
         }
     }
 
     public static void showResults() {
-        logger.info("кол-во suites: " + suiteMap.size());
+        logger.info("кол-во suites: " + exportSuiteList.size());
 
-        for (SuiteResultData suite : suiteMap.values()) {
+        for (SuiteResultData suite : exportSuiteList) {
             logger.info(String.format("кол-во тестов для suite [%s] = %d", suite.getSuiteName(), suite.getTestResultList().size()));
 
             for (TestResultData testResult: suite.getTestResultList()) {
                 logger.info(testResult.toString());
             }
         }
+
+        logger.info("Результаты в виде json: \n" + makeStringFromObject(exportSuiteList));
     }
 
+    /** Перебор имеющихся suite, для формирования списка тестов в каждом **/
+    public static void prepareTestResults() {
+        for (TestResultData testResultData: tmpAllTestResultMap.values()) {
+            String suiteName = testResultData.suite;
+            getSuite(suiteName).addTestResult(testResultData);
+        }
+
+        prepareExportList();
+    }
+
+    /** взять suite по названию, если нет - создать новый **/
     private static SuiteResultData getSuite(String suiteName) {
-        if (suiteMap.containsKey(suiteName)) {
-            return suiteMap.get(suiteName);
+        if (tmpSuiteMap.containsKey(suiteName)) {
+            return tmpSuiteMap.get(suiteName);
         } else {
             /** if doesn't exist - need to create a new suite **/
             SuiteResultData createdSuite = new SuiteResultData(suiteName);
-            suiteMap.put(suiteName, createdSuite);
+            tmpSuiteMap.put(suiteName, createdSuite);
             return createdSuite;
         }
+    }
+
+    /** экспорт suite с имеющимися списками тестов из мапы в List **/
+    private static void prepareExportList() {
+        for (SuiteResultData suite : tmpSuiteMap.values()) {
+            exportSuiteList.add(suite);
+        }
+
+        /** cleanup **/
+        tmpAllTestResultMap.clear();
+        tmpSuiteMap.clear();
     }
 }

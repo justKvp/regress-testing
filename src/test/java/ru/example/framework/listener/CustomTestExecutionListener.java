@@ -32,8 +32,8 @@ public class CustomTestExecutionListener implements TestExecutionListener {
         DBMgr.closeSessionFactoryIfNeed();
         logger.info("testPlanExecutionFinished");
 
-        TestResultKeeper.filLTestsInSuites();
-        TestResultKeeper.showResults();
+        TestResultKeeper.prepareTestResults();
+        //TestResultKeeper.showResults();
     }
 
     public void executionFinished(TestIdentifier testIdentifier, TestExecutionResult testExecutionResult) {
